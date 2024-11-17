@@ -9,8 +9,15 @@ public class HelloControllerTests
 
     public HelloControllerTests()
     {
-        _client = new HttpClient();
-        _client.BaseAddress = new System.Uri("https://localhost:7184/"); 
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
+
+        _client = new HttpClient(handler)
+        {
+            BaseAddress = new System.Uri("http://localhost:7184/")
+        };
     }
 
     [Theory]
